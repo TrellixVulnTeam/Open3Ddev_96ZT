@@ -189,18 +189,25 @@ int main(int argc, char *argv[]) {
         }
 
         std::shared_ptr<geometry::RGBDImage> (*CreateRGBDImage)(
-                const geometry::Image &, const geometry::Image &, bool);
-        if (rgbd_type == 0)
+                const geometry::Image &, const geometry::Image &, double, bool);
+        double depth_trunc;
+        if (rgbd_type == 0){
             CreateRGBDImage = &geometry::RGBDImage::CreateFromRedwoodFormat;
-        else if (rgbd_type == 1)
+            depth_trunc = 4.0;
+        }else if (rgbd_type == 1){
             CreateRGBDImage = &geometry::RGBDImage::CreateFromTUMFormat;
-        else if (rgbd_type == 2)
+            depth_trunc = 4.0;
+        }else if (rgbd_type == 2){
             CreateRGBDImage = &geometry::RGBDImage::CreateFromSUNFormat;
-        else if (rgbd_type == 3)
+            depth_trunc = 7.0;
+        }else if (rgbd_type == 3){
             CreateRGBDImage = &geometry::RGBDImage::CreateFromNYUFormat;
-        else
+            depth_trunc = 7.0;
+        }else{
             CreateRGBDImage = &geometry::RGBDImage::CreateFromRedwoodFormat;
-        auto rgbd_ptr = CreateRGBDImage(*color_ptr, *depth_ptr, false);
+            depth_trunc = 4.0;
+        }
+        auto rgbd_ptr = CreateRGBDImage(*color_ptr, *depth_ptr, depth_trunc, false);
         visualization::DrawGeometries({rgbd_ptr}, "RGBD", depth_ptr->width_ * 2,
                                       depth_ptr->height_);
 

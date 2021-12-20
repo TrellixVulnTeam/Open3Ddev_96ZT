@@ -82,24 +82,31 @@ int main(int argc, char* argv[]) {
 
     int rgbd_type =
             utility::GetProgramOptionAsInt(argc, argv, "--rgbd_type", 0);
+    double depth_trunc;
     auto color_source = io::CreateImageFromFile(argv[1]);
     auto depth_source = io::CreateImageFromFile(argv[2]);
     auto color_target = io::CreateImageFromFile(argv[3]);
     auto depth_target = io::CreateImageFromFile(argv[4]);
     std::shared_ptr<geometry::RGBDImage> (*CreateRGBDImage)(
-            const geometry::Image&, const geometry::Image&, bool);
-    if (rgbd_type == 0)
+            const geometry::Image&, const geometry::Image&, double, bool);
+    if (rgbd_type == 0){
         CreateRGBDImage = &geometry::RGBDImage::CreateFromRedwoodFormat;
-    else if (rgbd_type == 1)
+        depth_trunc = 4.0;
+    }else if (rgbd_type == 1){
         CreateRGBDImage = &geometry::RGBDImage::CreateFromTUMFormat;
-    else if (rgbd_type == 2)
+        depth_trunc = 4.0;
+    }else if (rgbd_type == 2){
         CreateRGBDImage = &geometry::RGBDImage::CreateFromSUNFormat;
-    else if (rgbd_type == 3)
+        depth_trunc = 7.0;
+    }else if (rgbd_type == 3){
         CreateRGBDImage = &geometry::RGBDImage::CreateFromNYUFormat;
-    else
+        depth_trunc = 7.0;
+    }else{
         CreateRGBDImage = &geometry::RGBDImage::CreateFromRedwoodFormat;
-    auto source = CreateRGBDImage(*color_source, *depth_source, true);
-    auto target = CreateRGBDImage(*color_target, *depth_target, true);
+        depth_trunc = 3.0;
+    }
+    auto source = CreateRGBDImage(*color_source, *depth_source, depth_trunc, true);
+    auto target = CreateRGBDImage(*color_target, *depth_target, depth_trunc, true);
 
     pipelines::odometry::OdometryOption option;
     Eigen::Matrix4d odo_init = Eigen::Matrix4d::Identity();
