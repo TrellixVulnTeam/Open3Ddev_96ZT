@@ -259,19 +259,25 @@ void pybind_image(py::module &m) {
                         &RGBDImage::CreateFromRedwoodFormat,
                         "Function to make RGBDImage (for Redwood format)",
                         "color"_a, "depth"_a,
+                        "depth_trunc"_a = 4.0,
                         "convert_rgb_to_intensity"_a = true)
-            .def_static(
-                    "create_from_tum_format", &RGBDImage::CreateFromTUMFormat,
-                    "Function to make RGBDImage (for TUM format)", "color"_a,
-                    "depth"_a, "convert_rgb_to_intensity"_a = true)
+            .def_static("create_from_tum_format", &RGBDImage::CreateFromTUMFormat,
+                    "Function to make RGBDImage (for TUM format)",
+                    "color"_a, "depth"_a,
+                    "depth_trunc"_a = 4.0,
+                    "convert_rgb_to_intensity"_a = true)
             .def_static(
                     "create_from_sun_format", &RGBDImage::CreateFromSUNFormat,
-                    "Function to make RGBDImage (for SUN format)", "color"_a,
-                    "depth"_a, "convert_rgb_to_intensity"_a = true)
+                    "Function to make RGBDImage (for SUN format)",
+                    "color"_a, "depth"_a,
+                    "depth_trunc"_a = 7.0,
+                    "convert_rgb_to_intensity"_a = true)
             .def_static(
                     "create_from_nyu_format", &RGBDImage::CreateFromNYUFormat,
-                    "Function to make RGBDImage (for NYU format)", "color"_a,
-                    "depth"_a, "convert_rgb_to_intensity"_a = true);
+                    "Function to make RGBDImage (for NYU format)",
+                    "color"_a, "depth"_a,
+                    "depth_trunc"_a = 7.0,
+                    "convert_rgb_to_intensity"_a = true);
 
     docstring::ClassMethodDocInject(m, "RGBDImage",
                                     "create_from_color_and_depth",

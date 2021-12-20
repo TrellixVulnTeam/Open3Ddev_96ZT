@@ -53,8 +53,9 @@ std::shared_ptr<RGBDImage> RGBDImage::CreateFromColorAndDepth(
 std::shared_ptr<RGBDImage> RGBDImage::CreateFromRedwoodFormat(
         const Image &color,
         const Image &depth,
-        bool convert_rgb_to_intensity /* = true*/) {
-    return CreateFromColorAndDepth(color, depth, 1000.0, 4.0,
+        double depth_trunc /* = 4.0 */,
+        bool convert_rgb_to_intensity /* = true*/){
+    return CreateFromColorAndDepth(color, depth, 1000.0, depth_trunc,
                                    convert_rgb_to_intensity);
 }
 
@@ -63,8 +64,9 @@ std::shared_ptr<RGBDImage> RGBDImage::CreateFromRedwoodFormat(
 std::shared_ptr<RGBDImage> RGBDImage::CreateFromTUMFormat(
         const Image &color,
         const Image &depth,
-        bool convert_rgb_to_intensity /* = true*/) {
-    return CreateFromColorAndDepth(color, depth, 5000.0, 4.0,
+        double depth_trunc /* = 4.0*/,
+        bool convert_rgb_to_intensity /* = true*/){
+    return CreateFromColorAndDepth(color, depth, 5000.0, depth_trunc,
                                    convert_rgb_to_intensity);
 }
 
@@ -73,7 +75,8 @@ std::shared_ptr<RGBDImage> RGBDImage::CreateFromTUMFormat(
 std::shared_ptr<RGBDImage> RGBDImage::CreateFromSUNFormat(
         const Image &color,
         const Image &depth,
-        bool convert_rgb_to_intensity /* = true*/) {
+        double depth_trunc /*= 7.0*/,
+        bool convert_rgb_to_intensity /* = true*/){
     std::shared_ptr<RGBDImage> rgbd_image = std::make_shared<RGBDImage>();
     if (color.height_ != depth.height_ || color.width_ != depth.width_) {
         utility::LogError(
@@ -86,7 +89,7 @@ std::shared_ptr<RGBDImage> RGBDImage::CreateFromSUNFormat(
         }
     }
     // SUN depth map has long range depth. We set depth_trunc as 7.0
-    return CreateFromColorAndDepth(color, depth, 1000.0, 7.0,
+    return CreateFromColorAndDepth(color, depth, 1000.0, depth_trunc,
                                    convert_rgb_to_intensity);
 }
 
@@ -94,7 +97,8 @@ std::shared_ptr<RGBDImage> RGBDImage::CreateFromSUNFormat(
 std::shared_ptr<RGBDImage> RGBDImage::CreateFromNYUFormat(
         const Image &color,
         const Image &depth,
-        bool convert_rgb_to_intensity /* = true*/) {
+        double depth_trunc /* = 7.0*/,
+        bool convert_rgb_to_intensity /* = true*/){
     std::shared_ptr<RGBDImage> rgbd_image = std::make_shared<RGBDImage>();
     if (color.height_ != depth.height_ || color.width_ != depth.width_) {
         utility::LogError(
@@ -116,7 +120,7 @@ std::shared_ptr<RGBDImage> RGBDImage::CreateFromNYUFormat(
         }
     }
     // NYU depth map has long range depth. We set depth_trunc as 7.0
-    return CreateFromColorAndDepth(color, depth, 1000.0, 7.0,
+    return CreateFromColorAndDepth(color, depth, 1000.0, depth_trunc,
                                    convert_rgb_to_intensity);
 }
 

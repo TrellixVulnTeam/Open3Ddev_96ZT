@@ -94,6 +94,7 @@ public:
     static std::shared_ptr<RGBDImage> CreateFromRedwoodFormat(
             const Image &color,
             const Image &depth,
+            double depth_trunc = 4.0,
             bool convert_rgb_to_intensity = true);
 
     /// \brief Factory function to create an RGBD Image from TUM dataset.
@@ -105,6 +106,7 @@ public:
     static std::shared_ptr<RGBDImage> CreateFromTUMFormat(
             const Image &color,
             const Image &depth,
+            double depth_trunc = 4.0,
             bool convert_rgb_to_intensity = true);
 
     /// \brief Factory function to create an RGBD Image from SUN3D dataset.
@@ -116,6 +118,7 @@ public:
     static std::shared_ptr<RGBDImage> CreateFromSUNFormat(
             const Image &color,
             const Image &depth,
+            double depth_trunc = 7.0,
             bool convert_rgb_to_intensity = true);
 
     /// \brief Factory function to create an RGBD Image from NYU dataset.
@@ -127,6 +130,7 @@ public:
     static std::shared_ptr<RGBDImage> CreateFromNYUFormat(
             const Image &color,
             const Image &depth,
+            double depth_trunc = 7.0,
             bool convert_rgb_to_intensity = true);
 
     static RGBDImagePyramid FilterPyramid(
