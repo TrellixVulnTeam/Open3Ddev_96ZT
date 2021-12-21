@@ -89,6 +89,9 @@ public:
     ///
     /// \param color The color image.
     /// \param depth The depth image.
+    /// \param depth_trunc Depth values larger than \p depth_trunc gets
+    /// truncated to 0. The depth values will first be scaled and then
+    /// truncated.
     /// \param convert_rgb_to_intensity Whether to convert RGB image to
     /// intensity image.
     static std::shared_ptr<RGBDImage> CreateFromRedwoodFormat(
@@ -101,6 +104,9 @@ public:
     ///
     /// \param color The color image.
     /// \param depth The depth image.
+    /// \param depth_trunc Depth values larger than \p depth_trunc gets
+    /// truncated to 0. The depth values will first be scaled and then
+    /// truncated.
     /// \param convert_rgb_to_intensity Whether to convert RGB image to
     /// intensity image.
     static std::shared_ptr<RGBDImage> CreateFromTUMFormat(
@@ -113,6 +119,9 @@ public:
     ///
     /// \param color The color image.
     /// \param depth The depth image.
+    /// \param depth_trunc Depth values larger than \p depth_trunc gets
+    /// truncated to 0. The depth values will first be scaled and then
+    /// truncated.
     /// \param convert_rgb_to_intensity Whether to convert RGB image to
     /// intensity image.
     static std::shared_ptr<RGBDImage> CreateFromSUNFormat(
@@ -125,6 +134,9 @@ public:
     ///
     /// \param color The color image.
     /// \param depth The depth image.
+    /// \param depth_trunc Depth values larger than \p depth_trunc gets
+    /// truncated to 0. The depth values will first be scaled and then
+    /// truncated.
     /// \param convert_rgb_to_intensity Whether to convert RGB image to
     /// intensity image.
     static std::shared_ptr<RGBDImage> CreateFromNYUFormat(
